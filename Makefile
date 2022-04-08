@@ -1,8 +1,7 @@
 COMMENT =	management tool for password and sensitive data
 
-V =		2.7.0
+V =		2.7.1
 DISTNAME =	keepassxc-${V}
-REVISION =	0
 
 CATEGORIES =	security
 
@@ -30,7 +29,7 @@ LIB_DEPENDS =	archivers/minizip \
 		graphics/libqrencode \
 		x11/qt5/qtsvg \
 		x11/qt5/qtx11extras  # needed for auto-type
-
+		
 RUN_DEPENDS =	devel/desktop-file-utils \
 		misc/shared-mime-info \
 		x11/gtk+3,-guic
@@ -52,9 +51,7 @@ FLAVOR ?=
 
 .if ${FLAVOR:Myubikey}
 LIB_DEPENDS +=		devel/libusb1 \
-			security/pcsc-lite \
-			security/yubico/yubico-c \
-			security/yubico/yubikey-personalization
+			security/pcsc-lite
 CONFIGURE_ARGS +=	-DWITH_XC_YUBIKEY=ON
 WANTLIB += pcsclite usb-1.0
 .endif
@@ -65,8 +62,6 @@ ONLY_FOR_ARCHS =	amd64 i386 aarch64
 CONFIGURE_ARGS +=	-DWITH_XC_BROWSER=ON \
 			-DWITH_XC_NETWORKING=ON
 .endif
-
-FIX_CRLF_FILES =	src/keeshare/ShareExport.cpp
 
 # ld: error: unable to find library -lX11
 CONFIGURE_ARGS +=	-DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS} -L${X11BASE}/lib"
